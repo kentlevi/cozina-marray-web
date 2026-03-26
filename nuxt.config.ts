@@ -1,9 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/eslint'],
   css: ['~/assets/css/main.css'],
   experimental: {
+    appManifest: process.env.NODE_ENV === 'production',
     payloadExtraction: process.env.NODE_ENV === 'production',
   },
   nitro: {

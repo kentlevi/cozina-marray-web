@@ -22,3 +22,37 @@
 .animate-slow-zoom {
   animation: slow-zoom 20s ease-in-out infinite alternate;
 }
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.reveal-fast {
+  transition-duration: 0.55s;
+}
+
+.reveal-on-scroll.reveal-delay-2 {
+  transition-delay: 0.12s;
+}
+
+.reveal-on-scroll.reveal-delay-3 {
+  transition-delay: 0.24s;
+}
+
+.reveal-on-scroll.reveal-from-left {
+  transform: translate3d(-36px, 0, 0);
+}
+
+.reveal-on-scroll.reveal-from-right {
+  transform: translate3d(36px, 0, 0);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}

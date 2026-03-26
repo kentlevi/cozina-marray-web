@@ -2,16 +2,16 @@
   <main class="relative bg-cm-background text-cm-on-surface">
     <!-- Hero Section: Split Editorial Layout -->
     <section class="relative min-h-[921px] flex flex-col md:flex-row items-center overflow-hidden">
-      <div class="w-full md:w-1/2 px-8 md:px-16 py-20 z-10">
+      <div v-reveal.left.fast class="w-full md:w-1/2 px-8 md:px-16 py-20 z-10">
         <span class="text-cm-secondary font-cm-headline font-bold tracking-widest text-sm uppercase mb-6 block">Est. 1984</span>
         <h1 class="font-cm-headline text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] text-cm-on-surface tracking-[-0.04em] mb-8">
-          Rooted in <br/><span class="text-cm-primary-container">Ginatilan</span>
+          Rooted in <br><span class="text-cm-primary-container">Ginatilan</span>
         </h1>
         <p class="text-cm-on-surface-variant text-lg md:text-xl max-w-md leading-relaxed font-light">
           An editorial journey through the heart of Cebuano culinary heritage, where tradition meets modern refinement.
         </p>
       </div>
-      <div class="w-full md:w-1/2 h-[614px] md:h-[1126px] relative mt-10 md:mt-0">
+      <div v-reveal.right.delay2 class="w-full md:w-1/2 h-[614px] md:h-[1126px] relative mt-10 md:mt-0">
         <div class="absolute inset-0 md:-top-10 md:-right-10 bg-cm-surface-container-low rounded-cm-lg md:rounded-none overflow-hidden transform md:scale-105 shadow-2xl">
           <img
             class="w-full h-full object-cover"
@@ -20,14 +20,14 @@
             loading="eager"
             fetchpriority="high"
             decoding="async"
-          />
+          >
         </div>
       </div>
     </section>
 
     <!-- Content Block 1: The Origin -->
-    <section class="py-32 px-8 md:px-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
-      <div class="md:col-span-5 md:order-2 space-y-8">
+    <section v-reveal class="py-32 px-8 md:px-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+      <div v-reveal.right class="md:col-span-5 md:order-2 space-y-8">
         <h2 class="font-cm-headline text-4xl font-bold text-cm-on-surface">The Hearth of the Home</h2>
         <p class="text-cm-on-surface-variant text-lg leading-loose editorial-dropcap">
           Every story has a beginning, and ours started in a small coastal kitchen where the rhythm of the waves dictated the menu of the day. In Ginatilan, cooking wasn't just about sustenance; it was an act of reverence for the land and sea. We learned that the secret to the perfect roast wasn't just the heat, but the wood—sourced from the surrounding groves, infusing every dish with a memory of the earth.
@@ -36,7 +36,7 @@
           At Cozina de Marray, we carry that same spirit. Our "Modern Hearth" philosophy bridges the gap between those sun-drenched coastal afternoons and the sophisticated urban dining experience of today.
         </p>
       </div>
-      <div class="md:col-span-7 md:order-1">
+      <div v-reveal.left.delay2 class="md:col-span-7 md:order-1">
         <div class="aspect-[4/5] rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
           <img
             class="w-full h-full object-cover"
@@ -45,14 +45,14 @@
             loading="lazy"
             decoding="async"
             referrerpolicy="no-referrer"
-          />
+          >
         </div>
       </div>
     </section>
 
     <!-- Highlight Quote: Massive & Italicized -->
-    <section class="w-full bg-cm-surface-container-lowest py-24 md:py-40 px-8">
-      <div class="max-w-5xl mx-auto text-center">
+    <section v-reveal class="w-full bg-cm-surface-container-lowest py-24 md:py-40 px-8">
+      <div v-reveal.fast class="max-w-5xl mx-auto text-center">
         <div class="mb-12 text-cm-secondary/40">
           <span class="material-symbols-outlined text-7xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
         </div>
@@ -64,8 +64,8 @@
     </section>
 
     <!-- Content Block 2: The Philosophy -->
-    <section class="py-32 px-8 md:px-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
-      <div class="md:col-span-7 order-2 md:order-2">
+    <section v-reveal class="py-32 px-8 md:px-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+      <div v-reveal.left class="md:col-span-7 order-2 md:order-2">
         <div class="aspect-video rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
           <img
             class="w-full h-full object-cover"
@@ -74,10 +74,10 @@
             loading="lazy"
             decoding="async"
             referrerpolicy="no-referrer"
-          />
+          >
         </div>
       </div>
-      <div class="md:col-span-5 space-y-8 order-1 md:order-1">
+      <div v-reveal.right.delay2 class="md:col-span-5 space-y-8 order-1 md:order-1">
         <h2 class="font-cm-headline text-4xl font-bold text-cm-on-surface">Sustainable Soul</h2>
         <p class="text-cm-on-surface-variant text-lg leading-loose">
           Sustainability isn't a trend for us; it’s our heritage. From the small-scale fishermen of Ginatilan to the organic farmers in the highlands of Cebu, our partners are chosen for their dedication to the environment. 
@@ -101,7 +101,7 @@
       </div>
     </section>
 
-    <section class="relative py-40 overflow-hidden">
+    <section v-reveal class="relative py-40 overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-30">
         <video 
           ref="narrativeVideo"
@@ -113,10 +113,10 @@
           poster="/videos/cozina-de-marray/video-narrative-poster.png"
           class="w-full h-full object-cover"
         >
-          <source src="/videos/cozina-de-marray/video-narrative.mp4" type="video/mp4" />
+          <source src="/videos/cozina-de-marray/video-narrative.mp4" type="video/mp4" >
         </video>
       </div>
-      <div class="relative z-10 px-8 text-center max-w-3xl mx-auto">
+      <div v-reveal.fast class="relative z-10 px-8 text-center max-w-3xl mx-auto">
         <h2 class="font-cm-headline text-5xl md:text-6xl font-black text-cm-on-surface mb-8">Join the Narrative</h2>
         <p class="text-cm-on-surface text-xl font-light mb-12 leading-relaxed">
           The Cozina de Marray experience is an invitation to slow down, to savor, and to become a part of our continuing story. We await you at our table.

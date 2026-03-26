@@ -1,12 +1,12 @@
 <template>
   <div class="bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
     <!-- Hero Section -->
-    <section class="relative h-[409px] min-h-[320px] w-full flex items-center justify-center overflow-hidden">
-      <div class="absolute inset-0 bg-black/60 z-10"></div>
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/cozina-de-marray/menu-hero.webp')"></div>
-      <div class="relative z-20 text-center px-6">
+    <section v-reveal.fast class="relative h-[409px] min-h-[320px] w-full flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-black/60 z-10"/>
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/cozina-de-marray/menu-hero.webp')"/>
+      <div v-reveal.fast class="relative z-20 text-center px-6">
         <h2 class="font-cm-headline text-6xl md:text-7xl font-bold tracking-tighter text-cm-on-surface mb-4">Our Menu</h2>
-        <div class="h-1 w-24 bg-cm-primary-container mx-auto"></div>
+        <div class="h-1 w-24 bg-cm-primary-container mx-auto"/>
       </div>
     </section>
 
@@ -17,13 +17,13 @@
           <button 
             v-for="cat in categories" 
             :key="cat"
-            @click="activeCategory = cat"
             :class="[
               'py-5 text-xs md:text-sm font-bold tracking-widest uppercase border-b-2 transition-all duration-300',
               activeCategory === cat 
                 ? 'border-cm-primary-container text-cm-on-surface' 
                 : 'border-transparent text-cm-on-surface-variant hover:text-cm-on-surface'
             ]"
+            @click="activeCategory = cat"
           >
             {{ cat }}
           </button>
@@ -33,17 +33,18 @@
 
     <!-- Dynamic Menu Grid -->
     <main class="bg-cm-surface-container-low py-16 px-6 min-h-[600px]">
-      <div class="max-w-6xl mx-auto">
+      <div v-reveal class="max-w-6xl mx-auto">
         <div v-if="filteredMenuItems.length > 0" class="grid md:grid-cols-2 gap-x-12 gap-y-8">
           <div 
             v-for="item in filteredMenuItems" 
             :key="item.id"
+            v-reveal.fast
             class="flex gap-5 bg-cm-surface-container p-4 rounded-cm-xl items-start group hover:bg-cm-surface-container-high transition-all"
           >
             <div 
               class="size-24 flex-shrink-0 bg-cover bg-center rounded-cm-lg grayscale group-hover:grayscale-0 transition-all shadow-md" 
               :style="{ backgroundImage: `url('${item.image}')` }"
-            ></div>
+            />
             <div class="flex-grow">
               <div class="flex justify-between items-start mb-1">
                 <h3 class="font-cm-headline text-lg font-bold text-cm-on-surface">{{ item.name }}</h3>
@@ -53,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div v-else class="text-center py-20">
+        <div v-else v-reveal.fast class="text-center py-20">
           <p class="text-cm-on-surface-variant italic">No items found in this category.</p>
         </div>
       </div>

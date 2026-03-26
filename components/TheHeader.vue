@@ -4,7 +4,7 @@
       <NuxtLink to="/" class="flex items-center gap-4 text-cm-on-surface ring-0 outline-none hover:opacity-80 transition-opacity">
         <div class="size-6 text-cm-primary-container">
           <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"/>
           </svg>
         </div>
         <h2 class="font-cm-headline text-xl font-bold tracking-tight uppercase">Cozina de Marray</h2>
