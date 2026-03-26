@@ -8,6 +8,7 @@
           loop 
           muted 
           playsinline 
+          poster="/videos/cozina-de-marray/video-hero-poster.png"
           class="w-full h-full object-cover"
         >
           <source src="/videos/cozina-de-marray/video-hero.mp4" type="video/mp4" />

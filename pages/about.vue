@@ -93,6 +93,7 @@
           loop 
           muted 
           playsinline 
+          poster="/videos/cozina-de-marray/video-narrative-poster.png"
           class="w-full h-full object-cover"
         >
           <source src="/videos/cozina-de-marray/video-narrative.mp4" type="video/mp4" />

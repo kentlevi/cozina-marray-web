@@ -59,7 +59,8 @@
               <div class="space-y-2">
                 <label class="text-xs font-cm-label uppercase tracking-widest text-cm-on-secondary-container ml-1">Date</label>
                 <div class="relative">
-                  <input class="w-full bg-cm-surface-container-lowest border-none rounded-cm-lg p-4 text-cm-on-surface booking-input transition-all" type="date"/>
+                  <input class="w-full bg-cm-surface-container-lowest border-none rounded-cm-lg p-4 pr-12 text-cm-on-surface booking-input transition-all" type="date"/>
+                  <span class="material-symbols-outlined date-picker-icon">calendar_month</span>
                 </div>
               </div>
               <div class="space-y-2">
@@ -126,10 +127,33 @@ useHead({
 </script>
 
 <style scoped>
+.booking-input[type='date'] {
+  color-scheme: dark;
+  position: relative;
+}
+
+.booking-input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .booking-input:focus {
   box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.4);
   border: none;
   outline: none;
+}
+.date-picker-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: #fff;
+  pointer-events: none;
+  font-size: 20px;
 }
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
