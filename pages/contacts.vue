@@ -3,9 +3,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
       <!-- Left Column: Branding & Imagery -->
       <div class="space-y-12">
-        <div class="relative group">
+        <div class="relative group overflow-hidden">
           <div class="absolute -inset-4 bg-cm-secondary-container/10 rounded-cm-lg blur-2xl group-hover:bg-cm-secondary-container/20 transition duration-1000"></div>
-          <img alt="Restaurant atmosphere" class="relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl" 
+          <img alt="Restaurant atmosphere" class="relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl animate-slow-zoom" 
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu8ed-A1y9gTbpwwsAwCp-y2UizGLkJWcvxkP-a0ayZWk01VdzVnD1NnO5B2nP7ny5aXZw1C-fIGXt9YnlVxw9qNNiw-5QZwMD3d9qjVoZdfBWUNapTFCFUT_ggep9knNe6n41GsNfnvvp6zoBy0D66y87-yNiebcIdoewkdPXNxh4rsaCjHys6ghau_xGleBSIzcTyod2PYIpI6fF2kNIie9B4uS3CdvWy3XNQ0ABOLTnASAtVexMK7yFRuo55xZj4PakkCyoo2ts"/>
         </div>
         <div class="space-y-6">

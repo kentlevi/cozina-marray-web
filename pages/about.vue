@@ -86,12 +86,17 @@
       </div>
     </section>
 
-    <!-- Final Vision Section -->
     <section class="relative py-40 overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-30">
-        <div class="w-full h-full bg-center bg-cover" 
-          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyB_t4beA2zVcKfNjxdBpOCLWZCNmo9RI89wnFoaiQtvWC2ypRH4hCzeL5Gq6gYefuqnyw2nQPuPoKWGm0WPy8WyIE18IGihS66j9e2Gu23IIuIUrPYq2Lekf5l_BmjnrO6IC3Ym-kfiodYEgScERkUaSzAM-Pxfo9EZBIcFUyNyzvhk8m1YhBhJI1QSzLQrKYOGbx9HiXpwVYCrIiA_K1RUHkVBqquUsB2y5puJMUgVJyq_q5bkD2_dkBFdqEtmwt65siIbpoEZrD");'>
-        </div>
+        <video 
+          autoplay 
+          loop 
+          muted 
+          playsinline 
+          class="w-full h-full object-cover"
+        >
+          <source src="/videos/cozina-de-marray/video-narrative.mp4" type="video/mp4" />
+        </video>
       </div>
       <div class="relative z-10 px-8 text-center max-w-3xl mx-auto">
         <h2 class="font-cm-headline text-5xl md:text-6xl font-black text-cm-on-surface mb-8">Join the Narrative</h2>
