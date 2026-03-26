@@ -13,9 +13,14 @@
       </div>
       <div class="w-full md:w-1/2 h-[614px] md:h-[1126px] relative mt-10 md:mt-0">
         <div class="absolute inset-0 md:-top-10 md:-right-10 bg-cm-surface-container-low rounded-cm-lg md:rounded-none overflow-hidden transform md:scale-105 shadow-2xl">
-          <div class="w-full h-full bg-center bg-cover" 
-            style='background-image: url("/images/cozina-de-marray/about-hero.webp");'>
-          </div>
+          <img
+            class="w-full h-full object-cover"
+            src="/images/cozina-de-marray/about-hero.webp"
+            alt="Cozina de Marray interior hero"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
       </div>
     </section>
@@ -33,9 +38,14 @@
       </div>
       <div class="md:col-span-7 md:order-1">
         <div class="aspect-[4/5] rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
-          <div class="w-full h-full bg-center bg-cover" 
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCymM_kWQFhYP_i5klxtxvh-Cakg-b5dpTB94qesCQz7tq-VC-WlQLO-D65hY9xXNzD_VQsgn2QwlpR2aV9SY6FvrHDYMLW0ZiALjqqves6xoUf_ujiNid9XmQJEeejI5yEzFNL0ZPPHAihmR_x-GCoMSjAkYsdt7h2WYH1hBRM08kh1NR7X64jrEI-3X9Z8VygJsHxLiiwHVae8G-0Rg211T0Sv7CdTpp7POSYKwEn2AAycFF7T0i1NvERuO2-HoLQ9TWDYCD_b92S");'>
-          </div>
+          <img
+            class="w-full h-full object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCymM_kWQFhYP_i5klxtxvh-Cakg-b5dpTB94qesCQz7tq-VC-WlQLO-D65hY9xXNzD_VQsgn2QwlpR2aV9SY6FvrHDYMLW0ZiALjqqves6xoUf_ujiNid9XmQJEeejI5yEzFNL0ZPPHAihmR_x-GCoMSjAkYsdt7h2WYH1hBRM08kh1NR7X64jrEI-3X9Z8VygJsHxLiiwHVae8G-0Rg211T0Sv7CdTpp7POSYKwEn2AAycFF7T0i1NvERuO2-HoLQ9TWDYCD_b92S"
+            alt="Traditional hearth preparation"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+          />
         </div>
       </div>
     </section>
@@ -57,9 +67,14 @@
     <section class="py-32 px-8 md:px-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
       <div class="md:col-span-7 order-2 md:order-2">
         <div class="aspect-video rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
-          <div class="w-full h-full bg-center bg-cover" 
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAacRGan7xV6mWfjIUKYTzA48yiAauY-caOeiiQBh1Ih8rUZnp4G6pnoVoWu7PLBtu4YTr3-pd_vFnwzxV9lnVjHrZawuTr2VPbBM8ovSh93ZiobDMh2AEmSWJyvr9pZ3wZEfT2eWdkfqcq6rFDNYTFIZ8zZtrjTlFcSM9cSx5UogpylCgOt0IVmR4Ylk1ya9O_7Z2AW5C-20GLNOmtg9g25aSl1Ca47Rs9z0OqdUBG0sRUdQD6Un0O4_AJ-XxoznSzKBQQuz1NZSy");'>
-          </div>
+          <img
+            class="w-full h-full object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAacRGan7xV6mWfjIUKYTzA48yiAauY-caOeiiQBh1Ih8rUZnp4G6pnoVoWu7PLBtu4YTr3-pd_vFnwzxV9lnVjHrZawuTr2VPbBM8ovSh93ZiobDMh2AEmSWJyvr9pZ3wZEfT2eWdkfqcq6rFDNYTFIZ8zZtrjTlFcSM9cSx5UogpylCgOt0IVmR4Ylk1ya9O_7Z2AW5C-20GLNOmtg9g25aSl1Ca47Rs9z0OqdUBG0sRUdQD6Un0O4_AJ-XxoznSzKBQQuz1NZSy"
+            alt="Sustainable sourcing details"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+          />
         </div>
       </div>
       <div class="md:col-span-5 space-y-8 order-1 md:order-1">
@@ -89,10 +104,12 @@
     <section class="relative py-40 overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-30">
         <video 
+          ref="narrativeVideo"
           autoplay 
           loop 
           muted 
           playsinline 
+          preload="metadata"
           poster="/videos/cozina-de-marray/video-narrative-poster.png"
           class="w-full h-full object-cover"
         >
@@ -114,9 +131,18 @@
 </template>
 
 <script setup>
+const narrativeVideo = ref(null)
+
+const resumeNarrativeVideo = () => {
+  narrativeVideo.value?.play?.().catch(() => {})
+}
+
 useHead({
   title: 'Our Story | Cozina de Marray',
 })
+
+onMounted(resumeNarrativeVideo)
+onActivated(resumeNarrativeVideo)
 </script>
 
 <style scoped>

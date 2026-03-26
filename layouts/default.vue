@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container min-h-screen">
+  <div class="min-h-screen overflow-x-hidden bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
     <TheHeader />
     <slot />
     <TheFooter />

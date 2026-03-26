@@ -67,7 +67,7 @@ import { ref, computed } from 'vue'
 const categories = ['ALL', 'MORNING CAFE', 'SIGNATURE GRILL', 'EVENING BAR']
 const activeCategory = ref('ALL')
 
-const menuItems = ref([
+const menuItems = [
   // MORNING CAFE
   {
     id: 1,
@@ -167,11 +167,11 @@ const menuItems = ref([
     description: "Small-batch amber ale brewed with local honey and roasted malts.",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAyB_t4beA2zVcKfNjxdBpOCLWZCNmo9RI89wnFoaiQtvWC2ypRH4hCzeL5Gq6gYefuqnyw2nQPuPoKWGm0WPy8WyIE18IGihS66j9e2Gu23IIuIUrPYq2Lekf5l_BmjnrO6IC3Ym-kfiodYEgScERkUaSzAM-Pxfo9EZBIcFUyNyzvhk8m1YhBhJI1QSzLQrKYOGbx9HiXpwVYCrIiA_K1RUHkVBqquUsB2y5puJMUgVJyq_q5bkD2_dkBFdqEtmwt65siIbpoEZrD"
   }
-])
+]
 
 const filteredMenuItems = computed(() => {
-  if (activeCategory.value === 'ALL') return menuItems.value
-  return menuItems.value.filter(item => item.category === activeCategory.value)
+  if (activeCategory.value === 'ALL') return menuItems
+  return menuItems.filter(item => item.category === activeCategory.value)
 })
 
 useHead({
