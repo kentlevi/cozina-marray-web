@@ -14,7 +14,7 @@
       <div class="w-full md:w-1/2 h-[614px] md:h-[1126px] relative mt-10 md:mt-0">
         <div class="absolute inset-0 md:-top-10 md:-right-10 bg-cm-surface-container-low rounded-cm-lg md:rounded-none overflow-hidden transform md:scale-105 shadow-2xl">
           <div class="w-full h-full bg-center bg-cover" 
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoen8ILeLmu35FmwAya9AAylbMwO1u3-xbjJDPct53FjCqphb6pX-FdRMoOXILa_UKPgB7E5jZko0ELe-B02Re4J8I7mFdRipF14nYnERmEl3v0l9UaAbEIUmapxwO5ydl0Tw8ykZSsWSyUX_soaU2DrKN3Lgf1ptAgBKG3VPgCkX03iGCLsI_VWUNCfi_On5OG2NBdwhx2q90SjXTN53uWMEDz13Gqk0OzwIThH50A95nChZleELfyrCzSGz-5wlIw79guW9rGuce");'>
+            style='background-image: url("/images/cozina-de-marray/about-hero.webp");'>
           </div>
         </div>
       </div>
