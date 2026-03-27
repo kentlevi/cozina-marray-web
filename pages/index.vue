@@ -16,7 +16,7 @@
         </video>
         <div class="absolute inset-0 bg-gradient-to-b from-cm-surface/80 via-cm-surface/40 to-cm-surface"/>
       </div>
-      <div v-reveal.fast class="relative z-10 text-center px-6 max-w-4xl">
+      <div class="relative z-10 text-center px-6 max-w-4xl">
         <h1 class="text-6xl md:text-8xl font-cm-headline font-black text-cm-on-surface tracking-tighter mb-4 drop-shadow-2xl">
           COZINA DE MARRAY
         </h1>

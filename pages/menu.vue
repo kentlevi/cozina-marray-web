@@ -1,7 +1,7 @@
 <template>
   <div class="bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
     <!-- Hero Section -->
-    <section v-reveal.fast class="relative h-[409px] min-h-[320px] w-full flex items-center justify-center overflow-hidden">
+    <section class="relative h-[409px] min-h-[320px] w-full flex items-center justify-center overflow-hidden">
       <div class="absolute inset-0 bg-black/60 z-10"/>
       <div class="absolute inset-0">
         <img
@@ -13,7 +13,7 @@
           decoding="async"
         >
       </div>
-      <div v-reveal.fast class="relative z-20 text-center px-6">
+      <div class="relative z-20 text-center px-6">
         <h2 class="font-cm-headline text-6xl md:text-7xl font-bold tracking-tighter text-cm-on-surface mb-4">Our Menu</h2>
         <div class="h-1 w-24 bg-cm-primary-container mx-auto"/>
       </div>
@@ -42,7 +42,7 @@
 
     <!-- Dynamic Menu Grid -->
     <main class="bg-cm-surface-container-low py-16 px-6 min-h-[600px]">
-      <div v-reveal class="max-w-6xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div v-if="paginatedMenuItems.length > 0" class="space-y-12">
           <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
             <div 
