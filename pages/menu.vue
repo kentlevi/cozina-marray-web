@@ -111,73 +111,48 @@
           <p class="text-cm-on-surface-variant italic">No items found in this category.</p>
         </div>
 
-        <!-- Campaign Gallery (The Living Flame Peek Carousel) -->
-        <section v-reveal class="pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden">
+        <!-- Cinematic Shorts Carousel -->
+        <section v-reveal.fast class="pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden border-t border-cm-outline-variant/10">
           <div class="max-w-screen-2xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
             <div class="space-y-4">
               <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-xs block">Cinematic Shorts</span>
               <h2 class="text-4xl md:text-6xl font-cm-headline font-bold tracking-tight text-cm-on-surface">The Living Flame</h2>
             </div>
-            <div class="flex gap-4">
-              <button 
-                class="size-12 rounded-full border border-cm-outline-variant/30 flex items-center justify-center hover:bg-cm-primary-container hover:text-cm-on-primary-container transition-all"
-                @click="prevSlide(true)"
-              >
-                <span class="material-symbols-outlined">west</span>
-              </button>
-              <button 
-                class="size-12 rounded-full border border-cm-outline-variant/30 flex items-center justify-center hover:bg-cm-primary-container hover:text-cm-on-primary-container transition-all"
-                @click="nextSlide(true)"
-              >
-                <span class="material-symbols-outlined">east</span>
-              </button>
-            </div>
           </div>
 
-          <div 
-            class="relative"
-            @mouseenter="pauseAutoPlay"
-            @mouseleave="resumeAutoPlay"
-          >
-            <div 
-              class="flex will-change-transform"
-              :class="[transitionEnabled ? 'transition-transform duration-[800ms] ease-in-out' : '']"
-              :style="{ 
-                transform: `translate3d(calc(${(isMobile ? '50% - 40%' : '50% - 15.5%')} - ${(currentIndex) * (isMobile ? 84 : 32.5)}%), 0, 0)`,
-                gap: isMobile ? '1rem' : '1.5rem'
-               }"
-            >
-              <div 
-                v-for="(video, idx) in loopedVideos" 
-                :key="'video-' + idx"
-                class="flex-shrink-0 w-[80%] md:w-[31%] relative aspect-[9/16] rounded-cm-xl overflow-hidden shadow-xl bg-black group transition-all duration-500 backface-visibility-hidden transform-gpu"
-                :class="[idx === currentIndex ? 'z-20 scale-105 shadow-cm-glow' : 'opacity-30 grayscale z-10 scale-95 blur-[0.5px]']"
-              >
-                <video
-                  :ref="el => setVideoRef(el, idx)"
-                  loop
-                  muted
-                  playsinline
-                  preload="metadata"
-                  :poster="`/videos/campain/${video.file.replace('.mp4', '_poster.webp')}`"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                >
-                  <source :src="`/videos/campain/${video.file}`" type="video/mp4" >
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div class="absolute bottom-6 left-6 z-20">
-                  <p class="text-cm-primary-container font-cm-headline font-bold tracking-widest uppercase text-[10px] mb-1">{{ video.subtitle || 'MASTERED BY FIRE' }}</p>
-                  <h4 class="text-lg font-cm-headline font-bold text-white line-clamp-1">{{ video.title }}</h4>
+          <div class="carousel-container px-6">
+            <Carousel v-bind="carouselConfig" class="cinematic-carousel">
+              <Slide v-for="short in cinematicShorts" :key="short.id">
+                <div class="px-2 w-full">
+                  <div class="relative aspect-[9/16] w-full bg-black rounded-cm-xl overflow-hidden group shadow-2xl transition-all duration-700">
+                    <video 
+                      loop 
+                      muted 
+                      playsinline 
+                      :poster="short.poster"
+                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      @mouseover="$event.target.play()"
+                      @mouseleave="$event.target.pause()"
+                    >
+                      <source :src="short.video" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute bottom-8 left-8 right-8 text-left z-20">
+                      <p class="text-cm-primary-container font-cm-headline font-bold tracking-widest uppercase text-[10px] mb-2">{{ short.subtitle }}</p>
+                      <h3 class="text-white font-cm-headline font-bold text-2xl tracking-tight drop-shadow-lg">{{ short.title }}</h3>
+                    </div>
+                    <!-- Play Button Overlay -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span class="material-symbols-outlined text-white/50 text-4xl transform scale-75 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">play_circle</span>
+                    </div>
+                  </div>
                 </div>
+              </Slide>
 
-                <!-- Active Status Gauge -->
-                <div 
-                  v-if="currentIndex === idx"
-                  class="absolute top-0 left-0 w-full h-1 bg-cm-primary-container z-30"
-                ></div>
-              </div>
-            </div>
+              <template #addons>
+                <Navigation />
+              </template>
+            </Carousel>
           </div>
         </section>
       </div>
@@ -187,6 +162,10 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onActivated, onUnmounted, nextTick } from 'vue'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+
+const carouselRef = ref(null)
 
 defineOptions({
   name: 'CozinaMenuPage'
@@ -321,117 +300,32 @@ const paginatedMenuItems = computed(() => {
   return filteredMenuItems.value.slice(start, end)
 })
 
-const galleryRefs = ref([])
-const currentIndex = ref(11) // Start at the middle section
-const autoPlayTimer = ref(null)
-const transitionEnabled = ref(true)
-
-const campaignVideos = [
-  { title: "The Living Fire", file: "The_Art_of_the_Living_Fire_version_1.mp4", subtitle: "BRAND NARRATIVE" },
-  { title: "Honor The Flame", file: "Honor_Her_With_The_Flame_version_1.mp4", subtitle: "SIGNATURE STORY" },
-  { title: "Modern Flame Mastery", file: "Mastery_Within_the_Modern_Flame_version_1.mp4", subtitle: "OUR TECHNIQUE" },
-  { title: "Refined by Coal", file: "Refined_by_the_Coal_version_1.mp4", subtitle: "SIGNATURE GRILL" },
-  { title: "Soil and Sea", file: "Sourced_from_Soil_and_Sea_version_1.mp4", subtitle: "OUR SOURCE" },
-  { title: "Rooted in Earth", file: "Rooted_in_Earth,_Refined_by_Fire_version_1.mp4", subtitle: "THE ORIGIN" },
-  { title: "Artisanal Textures", file: "Artisanal_Textures_in_Light_version_1.mp4", subtitle: "MODERN HEARTH" },
-  { title: "Morning Ritual", file: "Elevate_Your_Morning_Ritual_version_1.mp4", subtitle: "MORNING CAFE" },
-  { title: "Heritage Spread", file: "Morning_Heritage_Spread_version_1.mp4", subtitle: "MORNING CAFE" },
-  { title: "Sustaining the Flame", file: "Sustaining_the_Flame_version_1.mp4", subtitle: "OUR COMMITMENT" },
-  { title: "A Toast to the Evening", file: "A_Toast_to_the_Evening_version_1.mp4", subtitle: "EVENING BAR" },
+const cinematicShorts = [
+  { id: 1, title: 'The Living Fire', video: '/videos/campain/The_Art_of_the_Living_Fire_version_1.mp4', poster: '/videos/campain/The_Art_of_the_Living_Fire_version_1_poster.webp', subtitle: 'CHAPTER I' },
+  { id: 2, title: 'Honor The Flame', video: '/videos/campain/Honor_Her_With_The_Flame_version_1.mp4', poster: '/videos/campain/Honor_Her_With_The_Flame_version_1_poster.webp', subtitle: 'CHAPTER II' },
+  { id: 3, title: 'Modern Flame Mastery', video: '/videos/campain/Mastery_Within_the_Modern_Flame_version_1.mp4', poster: '/videos/campain/Mastery_Within_the_Modern_Flame_version_1_poster.webp', subtitle: 'CHAPTER III' },
+  { id: 4, title: 'Refined by Coal', video: '/videos/campain/Refined_by_the_Coal_version_1.mp4', poster: '/videos/campain/Refined_by_the_Coal_version_1_poster.webp', subtitle: 'CHAPTER IV' },
+  { id: 5, title: 'Soil and Sea', video: '/videos/campain/Sourced_from_Soil_and_Sea_version_1.mp4', poster: '/videos/campain/Sourced_from_Soil_and_Sea_version_1_poster.webp', subtitle: 'CHAPTER V' },
+  { id: 6, title: 'Rooted in Earth', video: '/videos/campain/Rooted_in_Earth,_Refined_by_Fire_version_1.mp4', poster: '/videos/campain/Rooted_in_Earth,_Refined_by_Fire_version_1_poster.webp', subtitle: 'CHAPTER VI' },
+  { id: 7, title: 'Artisanal Textures', video: '/videos/campain/Artisanal_Textures_in_Light_version_1.mp4', poster: '/videos/campain/Artisanal_Textures_in_Light_version_1_poster.webp', subtitle: 'CHAPTER VII' },
+  { id: 8, title: 'Morning Ritual', video: '/videos/campain/Elevate_Your_Morning_Ritual_version_1.mp4', poster: '/videos/campain/Elevate_Your_Morning_Ritual_version_1_poster.webp', subtitle: 'CHAPTER VIII' },
+  { id: 9, title: 'Heritage Spread', video: '/videos/campain/Morning_Heritage_Spread_version_1.mp4', poster: '/videos/campain/Morning_Heritage_Spread_version_1_poster.webp', subtitle: 'CHAPTER IX' },
+  { id: 10, title: 'Sustaining the Flame', video: '/videos/campain/Sustaining_the_Flame_version_1.mp4', poster: '/videos/campain/Sustaining_the_Flame_version_1_poster.webp', subtitle: 'CHAPTER X' },
+  { id: 11, title: 'A Toast to the Evening', video: '/videos/campain/A_Toast_to_the_Evening_version_1.mp4', poster: '/videos/campain/A_Toast_to_the_Evening_version_1_poster.webp', subtitle: 'CHAPTER XI' }
 ]
 
-const loopedVideos = computed(() => {
-  // Triple buffer for infinite seamless scroll
-  return [...campaignVideos, ...campaignVideos, ...campaignVideos]
-})
-
-const setVideoRef = (el, idx) => {
-  if (el) galleryRefs.value[idx] = el
-}
-
-const nextSlide = (manual = false) => {
-  if (manual) stopAutoPlayPermanently()
-  currentIndex.value++
-}
-
-const prevSlide = (manual = false) => {
-  if (manual) stopAutoPlayPermanently()
-  currentIndex.value--
-}
-
-const isAutoPlayPaused = ref(false)
-const isAutoPlayStopped = ref(false)
-
-const stopAutoPlayPermanently = () => {
-  isAutoPlayStopped.value = true
-  stopAutoPlay()
-}
-
-const startAutoPlay = () => {
-  if (isAutoPlayStopped.value) return
-  stopAutoPlay()
-  autoPlayTimer.value = setInterval(() => nextSlide(false), 5000)
-}
-
-const stopAutoPlay = () => {
-  if (autoPlayTimer.value) clearInterval(autoPlayTimer.value)
-}
-
-const pauseAutoPlay = () => stopAutoPlay()
-const resumeAutoPlay = () => startAutoPlay()
-
-const updatePlayback = () => {
-  if (galleryRefs.value && galleryRefs.value.length) {
-    galleryRefs.value.forEach((v, idx) => {
-      if (v) {
-        if (idx === currentIndex.value) {
-          v.muted = true
-          v.play().catch(() => {})
-        } else {
-          v.pause()
-        }
-      }
-    })
+const carouselConfig = {
+  itemsToShow: 1.25,
+  wrapAround: true,
+  itemsToScroll: 1,
+  gap: 24,
+  snapAlign: 'center',
+  breakpoints: {
+    640: { itemsToShow: 1.75 },
+    1024: { itemsToShow: 2.25 },
+    1280: { itemsToShow: 3.25 }
   }
 }
-
-// Logic for seamless jump
-watch(currentIndex, (newVal) => {
-  updatePlayback()
-  
-  // Boundary logic for the triple buffer
-  if (newVal >= 22) { // 11 (offset) + 11 (original)
-    setTimeout(() => {
-      // 1. Disable transition FIRST
-      transitionEnabled.value = false
-      
-      // 2. Jump index in the next frame
-      requestAnimationFrame(() => {
-        currentIndex.value = 11
-        
-        // 3. Re-enable transition after the jump is rendered
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            transitionEnabled.value = true
-          }, 50)
-        })
-      })
-    }, 810) 
-  }
-  if (newVal < 11) {
-    setTimeout(() => {
-      transitionEnabled.value = false
-      requestAnimationFrame(() => {
-        currentIndex.value = 21
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            transitionEnabled.value = true
-          }, 50)
-        })
-      })
-    }, 810)
-  }
-})
 
 useHead({
   title: 'Menu | Cozina de Marray',
@@ -444,27 +338,67 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', toggleMobile)
   }
-  setTimeout(updatePlayback, 100)
-  startAutoPlay()
-  setTimeout(markHeroPlayed, 1500) // Consistency across pages
+  setTimeout(markHeroPlayed, 1500)
 })
 
 onActivated(() => {
   toggleMobile()
-  setTimeout(updatePlayback, 100)
-  startAutoPlay()
 })
 
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('resize', toggleMobile)
   }
-  stopAutoPlay()
 })
 </script>
 
 <style scoped>
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Carousel Custom Styling */
+.cinematic-carousel {
+  --vc-nav-background: rgba(255, 255, 255, 0.1);
+  --vc-nav-color: white;
+  --vc-nav-border-radius: 50%;
+  --vc-nav-width: 48px;
+  --vc-nav-height: 48px;
+}
+
+.cinematic-carousel .carousel__prev,
+.cinematic-carousel .carousel__next {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cinematic-carousel .carousel__prev:hover,
+.cinematic-carousel .carousel__next:hover {
+  background: white;
+  color: black;
+  transform: scale(1.1);
+}
+
+.carousel__track {
+  margin: 0 !important;
+  padding: 40px 0 !important;
+  display: flex !important;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.carousel__slide {
+  padding: 0 !important; /* Managed by gap */
+  transition: all 0.7s cubic-bezier(0.2, 0, 0, 1);
+  filter: grayscale(1) opacity(0.3);
+  transform: scale(0.95);
+  transform-origin: center;
+}
+
+.carousel__slide--active {
+  filter: grayscale(0) opacity(1);
+  transform: scale(1.05);
+  z-index: 10;
 }
 </style>
