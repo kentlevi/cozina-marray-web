@@ -168,9 +168,7 @@ const heroVideo = ref(null)
 const resumeHeroVideo = () => {
   if (heroVideo.value) {
     heroVideo.value.muted = true
-    heroVideo.value.play().catch(() => {
-      // Retry once after interaction if needed, but muted usually works
-    })
+    heroVideo.value.play().catch(() => {})
   }
 }
 

@@ -106,13 +106,85 @@
         <div v-else v-reveal.fast class="text-center py-20">
           <p class="text-cm-on-surface-variant italic">No items found in this category.</p>
         </div>
+
+        <!-- Campaign Gallery (The Living Flame Peek Carousel) -->
+        <section v-reveal class="pt-4 pb-24 md:pt-8 md:pb-32 overflow-hidden">
+          <div class="max-w-screen-2xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
+            <div class="space-y-4">
+              <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-xs block">Cinematic Shorts</span>
+              <h2 class="text-4xl md:text-6xl font-cm-headline font-bold tracking-tight text-cm-on-surface">The Living Flame</h2>
+            </div>
+            <div class="flex gap-4">
+              <button 
+                class="size-12 rounded-full border border-cm-outline-variant/30 flex items-center justify-center hover:bg-cm-primary-container hover:text-cm-on-primary-container transition-all"
+                @click="prevSlide(true)"
+              >
+                <span class="material-symbols-outlined">west</span>
+              </button>
+              <button 
+                class="size-12 rounded-full border border-cm-outline-variant/30 flex items-center justify-center hover:bg-cm-primary-container hover:text-cm-on-primary-container transition-all"
+                @click="nextSlide(true)"
+              >
+                <span class="material-symbols-outlined">east</span>
+              </button>
+            </div>
+          </div>
+
+          <div 
+            class="relative"
+            @mouseenter="pauseAutoPlay"
+            @mouseleave="resumeAutoPlay"
+          >
+            <div 
+              class="flex will-change-transform"
+              :class="[transitionEnabled ? 'transition-transform duration-[800ms] ease-in-out' : '']"
+              :style="{ 
+                transform: `translate3d(calc(${(isMobile ? '50% - 40%' : '50% - 15.5%')} - ${(currentIndex) * (isMobile ? 84 : 32.5)}%), 0, 0)`,
+                gap: isMobile ? '1rem' : '1.5rem'
+               }"
+            >
+              <div 
+                v-for="(video, idx) in loopedVideos" 
+                :key="'video-' + idx"
+                class="flex-shrink-0 w-[80%] md:w-[31%] relative aspect-[9/16] rounded-cm-xl overflow-hidden shadow-xl bg-black group transition-all duration-500 backface-visibility-hidden transform-gpu"
+                :class="[idx === currentIndex ? 'z-20 scale-105 shadow-cm-glow' : 'opacity-30 grayscale z-10 scale-95 blur-[0.5px]']"
+              >
+                <video
+                  :ref="el => setVideoRef(el, idx)"
+                  loop
+                  muted
+                  playsinline
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                >
+                  <source :src="`/videos/campain/${video.file}`" type="video/mp4" >
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                
+                <div class="absolute bottom-6 left-6 z-20">
+                  <p class="text-cm-primary-container font-cm-headline font-bold tracking-widest uppercase text-[10px] mb-1">{{ video.subtitle || 'MASTERED BY FIRE' }}</p>
+                  <h4 class="text-lg font-cm-headline font-bold text-white line-clamp-1">{{ video.title }}</h4>
+                </div>
+
+                <!-- Active Status Gauge -->
+                <div 
+                  v-if="currentIndex === idx"
+                  class="absolute top-0 left-0 w-full h-1 bg-cm-primary-container z-30"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted, onActivated, onUnmounted, nextTick } from 'vue'
+
+defineOptions({
+  name: 'CozinaMenuPage'
+})
 
 const categories = ['ALL', 'MORNING CAFE', 'SIGNATURE GRILL', 'EVENING BAR']
 const activeCategory = ref('ALL')
@@ -227,6 +299,14 @@ const filteredMenuItems = computed(() => {
 const itemsPerPage = 6
 const currentPage = ref(1)
 
+const isMobile = ref(false)
+
+const toggleMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth < 768
+  }
+}
+
 const totalPages = computed(() => Math.ceil(filteredMenuItems.value.length / itemsPerPage))
 
 const paginatedMenuItems = computed(() => {
@@ -235,8 +315,142 @@ const paginatedMenuItems = computed(() => {
   return filteredMenuItems.value.slice(start, end)
 })
 
+const galleryRefs = ref([])
+const currentIndex = ref(11) // Start at the middle section
+const autoPlayTimer = ref(null)
+const transitionEnabled = ref(true)
+
+const campaignVideos = [
+  { title: "The Living Fire", file: "The_Art_of_the_Living_Fire_version_1.mp4", subtitle: "BRAND NARRATIVE" },
+  { title: "Honor The Flame", file: "Honor_Her_With_The_Flame_version_1.mp4", subtitle: "SIGNATURE STORY" },
+  { title: "Modern Flame Mastery", file: "Mastery_Within_the_Modern_Flame_version_1.mp4", subtitle: "OUR TECHNIQUE" },
+  { title: "Refined by Coal", file: "Refined_by_the_Coal_version_1.mp4", subtitle: "SIGNATURE GRILL" },
+  { title: "Soil and Sea", file: "Sourced_from_Soil_and_Sea_version_1.mp4", subtitle: "OUR SOURCE" },
+  { title: "Rooted in Earth", file: "Rooted_in_Earth,_Refined_by_Fire_version_1.mp4", subtitle: "THE ORIGIN" },
+  { title: "Artisanal Textures", file: "Artisanal_Textures_in_Light_version_1.mp4", subtitle: "MODERN HEARTH" },
+  { title: "Morning Ritual", file: "Elevate_Your_Morning_Ritual_version_1.mp4", subtitle: "MORNING CAFE" },
+  { title: "Heritage Spread", file: "Morning_Heritage_Spread_version_1.mp4", subtitle: "MORNING CAFE" },
+  { title: "Sustaining the Flame", file: "Sustaining_the_Flame_version_1.mp4", subtitle: "OUR COMMITMENT" },
+  { title: "A Toast to the Evening", file: "A_Toast_to_the_Evening_version_1.mp4", subtitle: "EVENING BAR" },
+]
+
+const loopedVideos = computed(() => {
+  // Triple buffer for infinite seamless scroll
+  return [...campaignVideos, ...campaignVideos, ...campaignVideos]
+})
+
+const setVideoRef = (el, idx) => {
+  if (el) galleryRefs.value[idx] = el
+}
+
+const nextSlide = (manual = false) => {
+  if (manual) stopAutoPlayPermanently()
+  currentIndex.value++
+}
+
+const prevSlide = (manual = false) => {
+  if (manual) stopAutoPlayPermanently()
+  currentIndex.value--
+}
+
+const isAutoPlayPaused = ref(false)
+const isAutoPlayStopped = ref(false)
+
+const stopAutoPlayPermanently = () => {
+  isAutoPlayStopped.value = true
+  stopAutoPlay()
+}
+
+const startAutoPlay = () => {
+  if (isAutoPlayStopped.value) return
+  stopAutoPlay()
+  autoPlayTimer.value = setInterval(() => nextSlide(false), 5000)
+}
+
+const stopAutoPlay = () => {
+  if (autoPlayTimer.value) clearInterval(autoPlayTimer.value)
+}
+
+const pauseAutoPlay = () => stopAutoPlay()
+const resumeAutoPlay = () => startAutoPlay()
+
+const updatePlayback = () => {
+  if (galleryRefs.value && galleryRefs.value.length) {
+    galleryRefs.value.forEach((v, idx) => {
+      if (v) {
+        if (idx === currentIndex.value) {
+          v.muted = true
+          v.play().catch(() => {})
+        } else {
+          v.pause()
+        }
+      }
+    })
+  }
+}
+
+// Logic for seamless jump
+watch(currentIndex, (newVal) => {
+  updatePlayback()
+  
+  // Boundary logic for the triple buffer
+  if (newVal >= 22) { // 11 (offset) + 11 (original)
+    setTimeout(() => {
+      // 1. Disable transition FIRST
+      transitionEnabled.value = false
+      
+      // 2. Jump index in the next frame
+      requestAnimationFrame(() => {
+        currentIndex.value = 11
+        
+        // 3. Re-enable transition after the jump is rendered
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            transitionEnabled.value = true
+          }, 50)
+        })
+      })
+    }, 810) 
+  }
+  if (newVal < 11) {
+    setTimeout(() => {
+      transitionEnabled.value = false
+      requestAnimationFrame(() => {
+        currentIndex.value = 21
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            transitionEnabled.value = true
+          }, 50)
+        })
+      })
+    }, 810)
+  }
+})
+
 useHead({
   title: 'Menu | Cozina de Marray',
+})
+
+onMounted(() => {
+  toggleMobile()
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', toggleMobile)
+  }
+  setTimeout(updatePlayback, 100)
+  startAutoPlay()
+})
+
+onActivated(() => {
+  toggleMobile()
+  setTimeout(updatePlayback, 100)
+  startAutoPlay()
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', toggleMobile)
+  }
+  stopAutoPlay()
 })
 </script>
 
