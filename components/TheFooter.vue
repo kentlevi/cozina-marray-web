@@ -2,7 +2,10 @@
   <footer class="bg-[#0E0E0E] w-full py-16 px-8 border-t border-[#E5E2E1]/10">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-screen-2xl mx-auto">
       <div class="col-span-1 md:col-span-1">
-        <span class="text-xl font-bold text-[#D4A373] mb-4 block font-cm-headline">COZINA DE MARRAY</span>
+        <NuxtLink to="/" class="flex flex-col gap-2 mb-6 hover:opacity-80 transition-opacity">
+          <img src="/logo.png" alt="Cozina de Marray Logo" class="h-12 w-auto self-start object-contain" />
+          <span class="text-xl font-bold text-[#D4A373] block font-cm-headline tracking-widest">COZINA DE MARRAY</span>
+        </NuxtLink>
         <p class="text-[#E5E2E1]/70 text-sm leading-relaxed mb-6">
           Crafting culinary experiences where tradition meets the modern flame.
         </p>
