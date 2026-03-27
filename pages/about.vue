@@ -111,7 +111,7 @@
           muted 
           playsinline 
           preload="metadata"
-          poster="/videos/cozina-de-marray/video-narrative-poster.png"
+          poster="/videos/cozina-de-marray/video-narrative-poster.webp"
           class="w-full h-full object-cover"
         >
           <source src="/videos/cozina-de-marray/video-narrative.mp4" type="video/mp4" >
