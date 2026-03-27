@@ -3,7 +3,16 @@
     <!-- Hero Section -->
     <section v-reveal.fast class="relative h-[409px] min-h-[320px] w-full flex items-center justify-center overflow-hidden">
       <div class="absolute inset-0 bg-black/60 z-10"/>
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/cozina-de-marray/menu-hero.webp')"/>
+      <div class="absolute inset-0">
+        <img
+          class="w-full h-full object-cover"
+          src="/images/cozina-de-marray/menu-hero.webp"
+          alt="Menu hero"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        >
+      </div>
       <div v-reveal.fast class="relative z-20 text-center px-6">
         <h2 class="font-cm-headline text-6xl md:text-7xl font-bold tracking-tighter text-cm-on-surface mb-4">Our Menu</h2>
         <div class="h-1 w-24 bg-cm-primary-container mx-auto"/>
@@ -41,10 +50,15 @@
             v-reveal.fast
             class="flex gap-5 bg-cm-surface-container p-4 rounded-cm-xl items-start group hover:bg-cm-surface-container-high transition-all"
           >
-            <div 
-              class="size-24 flex-shrink-0 bg-cover bg-center rounded-cm-lg grayscale group-hover:grayscale-0 transition-all shadow-md" 
-              :style="{ backgroundImage: `url('${item.image}')` }"
-            />
+            <div class="size-24 flex-shrink-0 relative overflow-hidden rounded-cm-lg grayscale group-hover:grayscale-0 transition-all shadow-md bg-cm-surface-container-high">
+              <img
+                :src="item.image"
+                :alt="item.name"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
             <div class="flex-grow">
               <div class="flex justify-between items-start mb-1">
                 <h3 class="font-cm-headline text-lg font-bold text-cm-on-surface">{{ item.name }}</h3>

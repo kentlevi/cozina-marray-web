@@ -141,8 +141,13 @@ useHead({
   title: 'Our Story | Cozina de Marray',
 })
 
-onMounted(resumeNarrativeVideo)
-onActivated(resumeNarrativeVideo)
+onMounted(() => {
+  setTimeout(resumeNarrativeVideo, 100)
+})
+
+onActivated(() => {
+  setTimeout(resumeNarrativeVideo, 100)
+})
 </script>
 
 <style scoped>

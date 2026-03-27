@@ -4,6 +4,7 @@
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
       <div class="absolute inset-0 z-0">
         <video
+          ref="heroVideo"
           autoplay
           loop
           muted
@@ -45,7 +46,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div v-reveal.left class="relative group">
             <div class="absolute -inset-4 bg-cm-primary-container/10 blur-2xl rounded-cm-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"/>
-            <img class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:-rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/signature-grill.jpg" alt="Signature Grill" >
+            <img class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:-rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/signature-grill.jpg" alt="Signature Grill" loading="lazy" decoding="async" >
           </div>
           <div v-reveal.right.delay2 class="space-y-8">
             <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-sm">The Main Event</span>
@@ -76,7 +77,7 @@
             </NuxtLink>
           </div>
           <div v-reveal.right.delay2 class="order-1 md:order-2 relative group">
-            <img class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/morning-cafe.jpg" alt="Morning Cafe" >
+            <img class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/morning-cafe.jpg" alt="Morning Cafe" loading="lazy" decoding="async" >
           </div>
         </div>
       </section>
@@ -86,7 +87,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div v-reveal.left class="relative group h-[500px]">
             <div class="absolute inset-0 bg-cm-primary-container/20 rounded-cm-lg mix-blend-overlay"/>
-            <img class="w-full h-full object-cover rounded-cm-lg shadow-2xl transition-all duration-700 group-hover:scale-105" src="/images/cozina-de-marray/evening-bar.jpg" alt="Evening Bar" >
+            <img class="w-full h-full object-cover rounded-cm-lg shadow-2xl transition-all duration-700 group-hover:scale-105" src="/images/cozina-de-marray/evening-bar.jpg" alt="Evening Bar" loading="lazy" decoding="async" >
           </div>
           <div v-reveal.right.delay2 class="space-y-8">
             <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-sm">Liquid Alchemy</span>
@@ -113,7 +114,7 @@
             <!-- Item 1 -->
             <div v-reveal.left class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/smoked-beef-ribs.jpg" alt="Smoked Beef Ribs" >
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/smoked-beef-ribs.jpg" alt="Smoked Beef Ribs" loading="lazy" decoding="async" >
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
@@ -126,7 +127,7 @@
             <!-- Item 2 -->
             <div v-reveal.delay2 class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors md:mt-12">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/seafood-linguine.jpg" alt="Seafood Linguine" >
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/seafood-linguine.jpg" alt="Seafood Linguine" loading="lazy" decoding="async" >
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
@@ -139,7 +140,7 @@
             <!-- Item 3 -->
             <div v-reveal.right.delay3 class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/heritage-salad.jpg" alt="Heritage Salad" >
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/heritage-salad.jpg" alt="Heritage Salad" loading="lazy" decoding="async" >
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
@@ -162,11 +163,30 @@
 </template>
 
 <script setup>
+const heroVideo = ref(null)
+
+const resumeHeroVideo = () => {
+  if (heroVideo.value) {
+    heroVideo.value.muted = true
+    heroVideo.value.play().catch(() => {
+      // Retry once after interaction if needed, but muted usually works
+    })
+  }
+}
+
 useHead({
   title: 'Cozina de Marray | Premium Grill & Bar',
   htmlAttrs: {
     class: 'dark'
   }
+})
+
+onMounted(() => {
+  setTimeout(resumeHeroVideo, 100)
+})
+
+onActivated(() => {
+  setTimeout(resumeHeroVideo, 100)
 })
 </script>
 

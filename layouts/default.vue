@@ -1,10 +1,16 @@
 <template>
-  <div class="min-h-screen overflow-x-hidden bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
+  <div class="min-h-screen bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
     <TheHeader />
-    <slot />
+    <main :class="[route.path === '/' ? '' : 'pt-[73px]']">
+      <slot />
+    </main>
     <TheFooter />
   </div>
 </template>
+
+<script setup>
+const route = useRoute()
+</script>
 
 <style>
 /* Global Styles */

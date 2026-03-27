@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-cm-surface/80 border-b border-cm-surface-variant/30 px-6 md:px-16 py-4">
+  <header class="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-md bg-cm-surface/80 border-b border-cm-surface-variant/30 px-6 md:px-16 py-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <NuxtLink to="/" class="flex items-center gap-4 text-cm-on-surface ring-0 outline-none hover:opacity-80 transition-opacity">
         <div class="size-6 text-cm-primary-container">
