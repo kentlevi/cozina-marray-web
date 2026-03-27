@@ -120,39 +120,63 @@
             </div>
           </div>
 
-          <div class="carousel-container px-6">
-            <Carousel v-bind="carouselConfig" class="cinematic-carousel">
-              <Slide v-for="short in cinematicShorts" :key="short.id">
-                <div class="px-2 w-full">
-                  <div class="relative aspect-[9/16] w-full bg-black rounded-cm-xl overflow-hidden group shadow-2xl transition-all duration-700">
+          <!-- Campaign Selection Carousel (The Living Flame) -->
+          <div class="relative group/carousel">
+            <!-- Navigation -->
+            <button 
+              class="absolute left-4 top-1/2 -translate-y-1/2 z-30 size-14 rounded-cm-full bg-cm-surface/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all shadow-2xl opacity-0 group-hover/carousel:opacity-100 -translate-x-4 group-hover/carousel:translate-x-0"
+              @click="prevSlide(true)"
+            >
+              <span class="material-symbols-outlined text-3xl">chevron_left</span>
+            </button>
+            <button 
+              class="absolute right-4 top-1/2 -translate-y-1/2 z-30 size-14 rounded-cm-full bg-cm-surface/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all shadow-2xl opacity-0 group-hover/carousel:opacity-100 translate-x-4 group-hover/carousel:translate-x-0"
+              @click="nextSlide(true)"
+            >
+              <span class="material-symbols-outlined text-3xl">chevron_right</span>
+            </button>
+
+            <!-- Carousel Track -->
+            <div class="overflow-hidden py-12">
+              <div 
+                class="campaign-carousel-track flex transition-transform duration-700 ease-[cubic-bezier(0.2,0,0,1)]"
+                :style="{ 
+                  transform: `translate3d(calc(${(isMobile ? '50% - 40%' : '50% - 15.5%')} - ${(currentIndex) * (isMobile ? 84 : 32.5)}%), 0, 0)`,
+                  transition: transitionEnabled ? 'transform 0.8s cubic-bezier(0.2, 0, 0, 1)' : 'none'
+                }"
+              >
+                <div 
+                  v-for="(short, idx) in cinematicShortsTriple" 
+                  :key="`${short.id}-${idx}`"
+                  class="campaign-card flex-shrink-0 transition-all duration-700"
+                  :class="[
+                    isMobile ? 'w-[80%] mx-[2%]' : 'w-[30%] mx-[1.25%]',
+                    idx === currentIndex ? 'active-card scale-105 opacity-100 grayscale-0 z-10' : 'opacity-30 grayscale'
+                  ]"
+                >
+                  <div class="relative aspect-[9/16] rounded-cm-xl overflow-hidden shadow-2xl group/card bg-cm-surface-container-high">
                     <video 
+                      :ref="el => setVideoRef(el, idx)"
                       loop 
                       muted 
                       playsinline 
                       :poster="short.poster"
-                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      @mouseover="$event.target.play()"
-                      @mouseleave="$event.target.pause()"
+                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105"
+                      @mouseenter="startAutoPlay"
                     >
                       <source :src="short.video" type="video/mp4">
                     </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover/card:opacity-80 transition-opacity"></div>
+                    
                     <div class="absolute bottom-8 left-8 right-8 text-left z-20">
-                      <p class="text-cm-primary-container font-cm-headline font-bold tracking-widest uppercase text-[10px] mb-2">{{ short.subtitle }}</p>
-                      <h3 class="text-white font-cm-headline font-bold text-2xl tracking-tight drop-shadow-lg">{{ short.title }}</h3>
+                      <p class="text-cm-primary-container font-cm-headline font-bold tracking-[0.3em] uppercase text-[10px] mb-2">{{ short.subtitle }}</p>
+                      <h3 class="text-white font-cm-headline font-bold text-2xl tracking-tight drop-shadow-md">{{ short.title }}</h3>
                     </div>
-                    <!-- Play Button Overlay -->
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span class="material-symbols-outlined text-white/50 text-4xl transform scale-75 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">play_circle</span>
-                    </div>
+
                   </div>
                 </div>
-              </Slide>
-
-              <template #addons>
-                <Navigation />
-              </template>
-            </Carousel>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -162,10 +186,91 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onActivated, onUnmounted, nextTick } from 'vue'
-import { Carousel, Slide, Navigation } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+const galleryRefs = ref([])
+const currentIndex = ref(11) // Start at the middle set for infinite loop
+const transitionEnabled = ref(true)
+const autoPlayTimer = ref(null)
+const isAutoPlayStopped = ref(false)
 
-const carouselRef = ref(null)
+const cinematicShortsTriple = computed(() => [
+  ...cinematicShorts,
+  ...cinematicShorts,
+  ...cinematicShorts
+])
+
+const setVideoRef = (el, idx) => {
+  if (el) galleryRefs.value[idx] = el
+}
+
+const updatePlayback = () => {
+  galleryRefs.value.forEach((v, idx) => {
+    if (v) {
+      if (idx === currentIndex.value) {
+        v.muted = true
+        v.play().catch(() => {})
+      } else {
+        v.pause()
+      }
+    }
+  })
+}
+
+const stopAutoPlayPermanently = () => {
+  isAutoPlayStopped.value = true
+  stopAutoPlay()
+}
+
+const startAutoPlay = () => {
+  if (isAutoPlayStopped.value) return
+  stopAutoPlay()
+  autoPlayTimer.value = setInterval(() => nextSlide(false), 5000)
+}
+
+const stopAutoPlay = () => {
+  if (autoPlayTimer.value) clearInterval(autoPlayTimer.value)
+}
+
+const nextSlide = (manual = false) => {
+  if (manual) stopAutoPlayPermanently()
+  currentIndex.value++
+}
+
+const prevSlide = (manual = false) => {
+  if (manual) stopAutoPlayPermanently()
+  currentIndex.value--
+}
+
+// Logic for seamless jump
+watch(currentIndex, (newVal) => {
+  updatePlayback()
+  
+  if (newVal >= 22) { // End of middle set
+    setTimeout(() => {
+      transitionEnabled.value = false
+      requestAnimationFrame(() => {
+        currentIndex.value = 11
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            transitionEnabled.value = true
+          }, 50)
+        })
+      })
+    }, 810) 
+  }
+  if (newVal < 11) { // Start of middle set
+    setTimeout(() => {
+      transitionEnabled.value = false
+      requestAnimationFrame(() => {
+        currentIndex.value = 21
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            transitionEnabled.value = true
+          }, 50)
+        })
+      })
+    }, 810)
+  }
+})
 
 defineOptions({
   name: 'CozinaMenuPage'
@@ -315,16 +420,7 @@ const cinematicShorts = [
 ]
 
 const carouselConfig = {
-  itemsToShow: 1.25,
-  wrapAround: true,
-  itemsToScroll: 1,
-  gap: 24,
-  snapAlign: 'center',
-  breakpoints: {
-    640: { itemsToShow: 1.75 },
-    1024: { itemsToShow: 2.25 },
-    1280: { itemsToShow: 3.25 }
-  }
+  // Config removed as we are moving to manual implementation
 }
 
 useHead({
@@ -338,7 +434,11 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', toggleMobile)
   }
-  setTimeout(markHeroPlayed, 1500)
+  setTimeout(() => {
+    markHeroPlayed()
+    updatePlayback()
+    startAutoPlay()
+  }, 1500)
 })
 
 onActivated(() => {
@@ -357,48 +457,18 @@ onUnmounted(() => {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Carousel Custom Styling */
-.cinematic-carousel {
-  --vc-nav-background: rgba(255, 255, 255, 0.1);
-  --vc-nav-color: white;
-  --vc-nav-border-radius: 50%;
-  --vc-nav-width: 48px;
-  --vc-nav-height: 48px;
-}
-
-.cinematic-carousel .carousel__prev,
-.cinematic-carousel .carousel__next {
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.cinematic-carousel .carousel__prev:hover,
-.cinematic-carousel .carousel__next:hover {
-  background: white;
-  color: black;
-  transform: scale(1.1);
-}
-
-.carousel__track {
-  margin: 0 !important;
-  padding: 40px 0 !important;
-  display: flex !important;
+/* Manual Carousel Styling */
+.campaign-carousel-track {
   backface-visibility: hidden;
+  will-change: transform;
+}
+
+.campaign-card {
   perspective: 1000px;
+  backface-visibility: hidden;
 }
 
-.carousel__slide {
-  padding: 0 !important; /* Managed by gap */
-  transition: all 0.7s cubic-bezier(0.2, 0, 0, 1);
-  filter: grayscale(1) opacity(0.3);
-  transform: scale(0.95);
-  transform-origin: center;
-}
-
-.carousel__slide--active {
-  filter: grayscale(0) opacity(1);
-  transform: scale(1.05);
-  z-index: 10;
+.active-card {
+  z-index: 20;
 }
 </style>
