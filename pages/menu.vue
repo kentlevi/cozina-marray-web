@@ -5,13 +5,14 @@
       <div class="absolute inset-0 bg-black/60 z-10"/>
       <div class="absolute inset-0">
         <NuxtImg
-          class="w-full h-full object-cover"
+          :class="['w-full h-full object-cover', !hasHeroPlayed ? 'animate-fade-in opacity-0' : 'opacity-100']"
           src="/images/cozina-de-marray/menu-hero.webp"
           alt="Menu hero"
           loading="eager"
           fetchpriority="high"
           width="1920"
-          quality="85"
+          quality="80"
+          densities="1"
         />
       </div>
       <div class="relative z-20 text-center px-6">
@@ -436,6 +437,8 @@ useHead({
   title: 'Menu | Cozina de Marray',
 })
 
+const { hasHeroPlayed, markHeroPlayed } = useAnimations()
+
 onMounted(() => {
   toggleMobile()
   if (typeof window !== 'undefined') {
@@ -443,6 +446,7 @@ onMounted(() => {
   }
   setTimeout(updatePlayback, 100)
   startAutoPlay()
+  setTimeout(markHeroPlayed, 1500) // Consistency across pages
 })
 
 onActivated(() => {

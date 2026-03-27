@@ -7,10 +7,11 @@
           <div class="absolute -inset-4 bg-cm-secondary-container/10 rounded-cm-lg blur-2xl group-hover:bg-cm-secondary-container/20 transition duration-1000"/>
           <NuxtImg
             alt="Restaurant atmosphere" 
-            class="relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl animate-slow-zoom" 
+            :class="['relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl animate-slow-zoom', !hasHeroPlayed ? 'animate-fade-in opacity-0' : 'opacity-100']" 
             src="/images/cozina-de-marray/restaurant-atmosphere.webp"
             width="800"
             quality="80"
+            densities="1"
             loading="lazy"
           />
         </div>
@@ -129,8 +130,14 @@ class="w-full bg-cm-surface-container-lowest border-none rounded-cm-lg p-4 text-
 </template>
 
 <script setup>
+const { hasHeroPlayed, markHeroPlayed } = useAnimations()
+
 useHead({
   title: 'Make a Reservation | Cozina de Marray',
+})
+
+onMounted(() => {
+  setTimeout(markHeroPlayed, 1500)
 })
 </script>
 

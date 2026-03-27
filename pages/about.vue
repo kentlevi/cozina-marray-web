@@ -14,7 +14,7 @@
       <div class="w-full md:w-1/2 h-[614px] md:h-screen relative mt-10 md:mt-0">
         <div class="absolute inset-0 md:-top-10 md:-right-10 bg-cm-surface-container-low rounded-cm-lg md:rounded-none overflow-hidden transform md:scale-105 shadow-2xl">
           <NuxtImg
-            class="w-full h-full object-cover"
+            :class="['w-full h-full object-cover transitions-transform duration-700', !hasHeroPlayed ? 'animate-fade-in opacity-0' : 'opacity-100']"
             src="/images/cozina-de-marray/about-hero.webp"
             alt="Cozina de Marray interior hero"
             loading="eager"
@@ -145,8 +145,11 @@ useHead({
   title: 'Our Story | Cozina de Marray',
 })
 
+const { hasHeroPlayed, markHeroPlayed } = useAnimations()
+
 onMounted(() => {
   setTimeout(resumeNarrativeVideo, 100)
+  setTimeout(markHeroPlayed, 1500) // Delay to ensure we mark it as played after initial entrance
 })
 
 onActivated(() => {
