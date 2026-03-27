@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-cm-surface text-cm-on-surface font-cm-body selection:bg-cm-primary-container selection:text-cm-on-primary-container">
     <TheHeader />
-    <main :class="[route.path === '/' ? '' : 'pt-[73px]']">
+    <main :class="[(route.path === '/' || route.path === '/about') ? '' : 'pt-[73px]']">
       <slot />
     </main>
     <TheFooter />

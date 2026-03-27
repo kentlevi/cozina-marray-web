@@ -1,7 +1,7 @@
 <template>
   <main class="relative bg-cm-background text-cm-on-surface">
     <!-- Hero Section: Split Editorial Layout -->
-    <section class="relative min-h-[921px] flex flex-col md:flex-row items-center overflow-hidden">
+    <section class="relative md:h-screen min-h-[700px] flex flex-col md:flex-row items-center overflow-hidden">
       <div class="w-full md:w-1/2 px-8 md:px-16 py-20 z-10">
         <span class="text-cm-secondary font-cm-headline font-bold tracking-widest text-sm uppercase mb-6 block">Est. 1984</span>
         <h1 class="font-cm-headline text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] text-cm-on-surface tracking-[-0.04em] mb-8">
@@ -11,7 +11,7 @@
           An editorial journey through the heart of Cebuano culinary heritage, where tradition meets modern refinement.
         </p>
       </div>
-      <div class="w-full md:w-1/2 h-[614px] md:h-[1126px] relative mt-10 md:mt-0">
+      <div class="w-full md:w-1/2 h-[614px] md:h-screen relative mt-10 md:mt-0">
         <div class="absolute inset-0 md:-top-10 md:-right-10 bg-cm-surface-container-low rounded-cm-lg md:rounded-none overflow-hidden transform md:scale-105 shadow-2xl">
           <NuxtImg
             class="w-full h-full object-cover"
