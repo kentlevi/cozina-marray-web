@@ -194,7 +194,7 @@ onActivated(() => {
 }
 
 .wood-grain-overlay {
-  background-image: url('/images/cozina-de-marray/wood-grain-overlay.jpg');
+  background-image: url('/images/cozina-de-marray/wood-grain-overlay.webp');
   opacity: 0.03;
 }
 </style>
