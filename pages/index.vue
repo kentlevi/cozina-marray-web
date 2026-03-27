@@ -114,7 +114,7 @@
             <!-- Item 1 -->
             <div v-reveal.left class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/smoked-beef-ribs.jpg" alt="Smoked Beef Ribs" loading="lazy" decoding="async" >
+                <NuxtImg class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/smoked-beef-ribs.webp" alt="Smoked Beef Ribs" loading="lazy" width="600" quality="80" />
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
@@ -127,7 +127,7 @@
             <!-- Item 2 -->
             <div v-reveal.delay2 class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors md:mt-12">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/seafood-linguine.jpg" alt="Seafood Linguine" loading="lazy" decoding="async" >
+                <NuxtImg class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/seafood-linguine.webp" alt="Seafood Linguine" loading="lazy" width="600" quality="80" />
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
@@ -140,7 +140,7 @@
             <!-- Item 3 -->
             <div v-reveal.right.delay3 class="bg-cm-surface-container rounded-cm-lg overflow-hidden group hover:bg-cm-surface-container-high transition-colors">
               <div class="h-64 overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/heritage-salad.jpg" alt="Heritage Salad" loading="lazy" decoding="async" >
+                <NuxtImg class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="/images/cozina-de-marray/heritage-salad.webp" alt="Heritage Salad" loading="lazy" width="600" quality="80" />
               </div>
               <div class="p-8 space-y-4">
                 <div class="flex justify-between items-start">
