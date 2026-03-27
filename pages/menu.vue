@@ -32,7 +32,7 @@
                 ? 'border-cm-primary-container text-cm-on-surface' 
                 : 'border-transparent text-cm-on-surface-variant hover:text-cm-on-surface'
             ]"
-            @click="activeCategory = cat"
+            @click="activeCategory = cat; currentPage = 1"
           >
             {{ cat }}
           </button>
@@ -43,29 +43,64 @@
     <!-- Dynamic Menu Grid -->
     <main class="bg-cm-surface-container-low py-16 px-6 min-h-[600px]">
       <div v-reveal class="max-w-6xl mx-auto">
-        <div v-if="filteredMenuItems.length > 0" class="grid md:grid-cols-2 gap-x-12 gap-y-8">
-          <div 
-            v-for="item in filteredMenuItems" 
-            :key="item.id"
-            v-reveal.fast
-            class="flex gap-5 bg-cm-surface-container p-4 rounded-cm-xl items-start group hover:bg-cm-surface-container-high transition-all"
-          >
-            <div class="size-24 flex-shrink-0 relative overflow-hidden rounded-cm-lg grayscale group-hover:grayscale-0 transition-all shadow-md bg-cm-surface-container-high">
-              <img
-                :src="item.image"
-                :alt="item.name"
-                class="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-            <div class="flex-grow">
-              <div class="flex justify-between items-start mb-1">
-                <h3 class="font-cm-headline text-lg font-bold text-cm-on-surface">{{ item.name }}</h3>
-                <span class="text-cm-primary-container font-bold text-sm">{{ item.price }}</span>
+        <div v-if="paginatedMenuItems.length > 0" class="space-y-12">
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div 
+              v-for="item in paginatedMenuItems" 
+              :key="item.id"
+              v-reveal.fast
+              class="flex gap-5 bg-cm-surface-container p-4 rounded-cm-xl items-start group hover:bg-cm-surface-container-high transition-all"
+            >
+              <div class="size-24 flex-shrink-0 relative overflow-hidden rounded-cm-lg grayscale group-hover:grayscale-0 transition-all shadow-md bg-cm-surface-container-high">
+                <img
+                  :src="item.image"
+                  :alt="item.name"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                >
               </div>
-              <p class="text-cm-on-surface-variant text-sm leading-relaxed">{{ item.description }}</p>
+              <div class="flex-grow">
+                <div class="flex justify-between items-start mb-1">
+                  <h3 class="font-cm-headline text-lg font-bold text-cm-on-surface">{{ item.name }}</h3>
+                  <span class="text-cm-primary-container font-bold text-sm">{{ item.price }}</span>
+                </div>
+                <p class="text-cm-on-surface-variant text-sm leading-relaxed">{{ item.description }}</p>
+              </div>
             </div>
+          </div>
+
+          <!-- Pagination Controls -->
+          <div v-if="totalPages > 1" class="flex justify-center items-center gap-4 pt-8 border-t border-cm-outline-variant/10">
+            <button 
+              :disabled="currentPage === 1"
+              class="size-10 flex items-center justify-center rounded-full border border-cm-outline-variant/30 text-cm-on-surface hover:bg-cm-primary-container hover:text-cm-on-primary-container disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-cm-on-surface transition-all"
+              @click="currentPage--"
+            >
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <div class="flex gap-2">
+              <button 
+                v-for="p in totalPages" 
+                :key="p"
+                :class="[
+                  'size-10 rounded-full font-bold flex items-center justify-center transition-all',
+                  currentPage === p 
+                    ? 'bg-cm-primary-container text-cm-on-primary-container shadow-lg' 
+                    : 'text-cm-on-surface hover:bg-cm-surface-container-highest'
+                ]"
+                @click="currentPage = p"
+              >
+                {{ p }}
+              </button>
+            </div>
+            <button 
+              :disabled="currentPage === totalPages"
+              class="size-10 flex items-center justify-center rounded-full border border-cm-outline-variant/30 text-cm-on-surface hover:bg-cm-primary-container hover:text-cm-on-primary-container disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-cm-on-surface transition-all"
+              @click="currentPage++"
+            >
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
           </div>
         </div>
         <div v-else v-reveal.fast class="text-center py-20">
@@ -187,6 +222,17 @@ const menuItems = [
 const filteredMenuItems = computed(() => {
   if (activeCategory.value === 'ALL') return menuItems
   return menuItems.filter(item => item.category === activeCategory.value)
+})
+
+const itemsPerPage = 6
+const currentPage = ref(1)
+
+const totalPages = computed(() => Math.ceil(filteredMenuItems.value.length / itemsPerPage))
+
+const paginatedMenuItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredMenuItems.value.slice(start, end)
 })
 
 useHead({
