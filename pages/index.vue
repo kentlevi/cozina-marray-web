@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
       <div class="absolute inset-0 z-0">
         <video
           ref="heroVideo"
@@ -35,7 +35,7 @@
       <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
         <span class="material-symbols-outlined text-4xl">keyboard_double_arrow_down</span>
       </div>
-    </header>
+    </section>
 
     <!-- Zigzag Features -->
     <main class="relative">
