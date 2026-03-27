@@ -158,12 +158,88 @@
           </div>
         </div>
       </section>
+
+      <!-- Cinematic Shorts Carousel -->
+      <section v-reveal.fast class="bg-cm-surface py-24 md:py-32 overflow-hidden border-t border-cm-surface-variant/20">
+        <div class="px-8 mb-12">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="max-w-xl">
+              <span class="text-cm-secondary font-cm-headline font-bold tracking-widest text-sm uppercase mb-4 block">Our Visual Journey</span>
+              <h2 class="text-5xl md:text-6xl font-cm-headline font-black tracking-tighter text-cm-on-surface leading-[0.9]">Cinematic <br><span class="text-cm-primary-container">Shorts</span></h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-container px-4">
+          <Carousel v-bind="carouselConfig" class="cinematic-carousel">
+            <Slide v-for="short in cinematicShorts" :key="short.id">
+              <div class="px-2 w-full">
+                <div class="relative aspect-[9/16] w-full bg-cm-surface-container rounded-cm-xl overflow-hidden group shadow-2xl transition-all duration-700 hover:scale-[1.02]">
+                  <video 
+                    loop 
+                    muted 
+                    playsinline 
+                    :poster="short.poster"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    @mouseover="$event.target.play()"
+                    @mouseleave="$event.target.pause()"
+                  >
+                    <source :src="short.video" type="video/mp4">
+                  </video>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                  <div class="absolute bottom-6 left-6 right-6 text-left">
+                    <h3 class="text-white font-cm-headline font-bold text-lg tracking-tight drop-shadow-lg">{{ short.title }}</h3>
+                  </div>
+                  <!-- Play Button Overlay -->
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="material-symbols-outlined text-white/50 text-5xl transform scale-75 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">play_circle</span>
+                  </div>
+                </div>
+              </div>
+            </Slide>
+
+            <template #addons>
+              <Navigation />
+            </template>
+          </Carousel>
+        </div>
+      </section>
     </main>
   </div>
 </template>
 
 <script setup>
+import 'vue3-carousel/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+
 const heroVideo = ref(null)
+
+const cinematicShorts = [
+  { id: 1, title: 'Evening Toast', video: '/videos/campain/A_Toast_to_the_Evening_version_1.mp4', poster: '/videos/campain/A_Toast_to_the_Evening_version_1_poster.webp' },
+  { id: 2, title: 'Artisanal Light', video: '/videos/campain/Artisanal_Textures_in_Light_version_1.mp4', poster: '/videos/campain/Artisanal_Textures_in_Light_version_1_poster.webp' },
+  { id: 3, title: 'Morning Ritual', video: '/videos/campain/Elevate_Your_Morning_Ritual_version_1.mp4', poster: '/videos/campain/Elevate_Your_Morning_Ritual_version_1_poster.webp' },
+  { id: 4, title: 'The Modern Flame', video: '/videos/campain/Mastery_Within_the_Modern_Flame_version_1.mp4', poster: '/videos/campain/Mastery_Within_the_Modern_Flame_version_1_poster.webp' },
+  { id: 5, title: 'Heritage Spread', video: '/videos/campain/Morning_Heritage_Spread_version_1.mp4', poster: '/videos/campain/Morning_Heritage_Spread_version_1_poster.webp' },
+  { id: 6, title: 'Coal Refinement', video: '/videos/campain/Refined_by_the_Coal_version_1.mp4', poster: '/videos/campain/Refined_by_the_Coal_version_1_poster.webp' },
+  { id: 7, title: 'Fire & Earth', video: '/videos/campain/Rooted_in_Earth,_Refined_by_Fire_version_1.mp4', poster: '/videos/campain/Rooted_in_Earth,_Refined_by_Fire_version_1_poster.webp' },
+  { id: 8, title: 'Soil & Sea', video: '/videos/campain/Sourced_from_Soil_and_Sea_version_1.mp4', poster: '/videos/campain/Sourced_from_Soil_and_Sea_version_1_poster.webp' },
+  { id: 9, title: 'Sustaining Flame', video: '/videos/campain/Sustaining_the_Flame_version_1.mp4', poster: '/videos/campain/Sustaining_the_Flame_version_1_poster.webp' },
+  { id: 10, title: 'Living Fire', video: '/videos/campain/The_Art_of_the_Living_Fire_version_1.mp4', poster: '/videos/campain/The_Art_of_the_Living_Fire_version_1_poster.webp' },
+  { id: 11, title: 'Honor The Flame', video: '/videos/campain/Honor_Her_With_The_Flame_version_1.mp4', poster: '/videos/campain/Honor_Her_With_The_Flame_version_1_poster.webp' }
+]
+
+const carouselConfig = {
+  itemsToShow: 1.2,
+  wrapAround: true,
+  itemsToScroll: 1,
+  gap: 16,
+  snapAlign: 'center',
+  breakpoints: {
+    640: { itemsToShow: 2.2 },
+    1024: { itemsToShow: 3.5 },
+    1280: { itemsToShow: 4.5 }
+  }
+}
 
 const resumeHeroVideo = () => {
   if (heroVideo.value) {
@@ -196,5 +272,32 @@ onActivated(() => {
 .wood-grain-overlay {
   background-image: url('/images/cozina-de-marray/wood-grain-overlay.webp');
   opacity: 0.03;
+}
+
+/* Carousel Custom Styling */
+.cinematic-carousel {
+  --vc-nav-background: rgba(255, 255, 255, 0.1);
+  --vc-nav-color: white;
+  --vc-nav-border-radius: 50%;
+  --vc-nav-width: 48px;
+  --vc-nav-height: 48px;
+}
+
+.cinematic-carousel .carousel__prev,
+.cinematic-carousel .carousel__next {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cinematic-carousel .carousel__prev:hover,
+.cinematic-carousel .carousel__next:hover {
+  background: white;
+  color: black;
+  transform: scale(1.1);
+}
+
+.carousel__track {
+  margin: 0 !important;
 }
 </style>
