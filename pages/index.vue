@@ -46,7 +46,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div v-reveal.left class="relative group">
             <div class="absolute -inset-4 bg-cm-primary-container/10 blur-2xl rounded-cm-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"/>
-            <NuxtImg class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:-rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/signature-grill.webp" alt="Signature Grill" loading="lazy" width="800" quality="80" />
+            <NuxtImg class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:-rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/signature-grill.webp" alt="Signature Grill" loading="lazy" width="800" quality="80" densities="1" />
           </div>
           <div v-reveal.right.delay2 class="space-y-8">
             <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-sm">The Main Event</span>
@@ -77,7 +77,7 @@
             </NuxtLink>
           </div>
           <div v-reveal.right.delay2 class="order-1 md:order-2 relative group">
-            <NuxtImg class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/morning-cafe.webp" alt="Morning Cafe" loading="lazy" width="800" quality="80" />
+            <NuxtImg class="relative rounded-cm-lg shadow-2xl object-cover w-full aspect-[4/5] transform group-hover:rotate-1 transition-transform duration-500" src="/images/cozina-de-marray/morning-cafe.webp" alt="Morning Cafe" loading="lazy" width="800" quality="80" densities="1" />
           </div>
         </div>
       </section>
@@ -87,7 +87,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div v-reveal.left class="relative group h-[500px]">
             <div class="absolute inset-0 bg-cm-primary-container/20 rounded-cm-lg mix-blend-overlay"/>
-            <NuxtImg class="w-full h-full object-cover rounded-cm-lg shadow-2xl transition-all duration-700 group-hover:scale-105" src="/images/cozina-de-marray/evening-bar.webp" alt="Evening Bar" loading="lazy" width="800" quality="80" />
+            <NuxtImg class="w-full h-full object-cover rounded-cm-lg shadow-2xl transition-all duration-700 group-hover:scale-105" src="/images/cozina-de-marray/evening-bar.webp" alt="Evening Bar" loading="lazy" width="800" quality="80" densities="1" />
           </div>
           <div v-reveal.right.delay2 class="space-y-8">
             <span class="text-cm-secondary font-cm-headline font-bold tracking-[0.2em] uppercase text-sm">Liquid Alchemy</span>

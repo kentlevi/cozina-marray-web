@@ -20,7 +20,8 @@
             loading="eager"
             fetchpriority="high"
             width="1200"
-            quality="85"
+            quality="80"
+            densities="1"
           />
         </div>
       </div>
@@ -44,8 +45,9 @@
             src="/images/cozina-de-marray/hearth-preparation.webp"
             alt="Traditional hearth preparation"
             loading="lazy"
-            width="800"
+            width="1000"
             quality="80"
+            densities="1"
           />
         </div>
       </div>
@@ -73,8 +75,9 @@
             src="/images/cozina-de-marray/sustainable-sourcing.webp"
             alt="Sustainable sourcing details"
             loading="lazy"
-            width="800"
+            width="1000"
             quality="80"
+            densities="1"
           />
         </div>
       </div>
