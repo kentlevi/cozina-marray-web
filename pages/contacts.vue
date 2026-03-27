@@ -5,9 +5,14 @@
       <div v-reveal.left class="space-y-12">
         <div class="relative group overflow-hidden">
           <div class="absolute -inset-4 bg-cm-secondary-container/10 rounded-cm-lg blur-2xl group-hover:bg-cm-secondary-container/20 transition duration-1000"/>
-          <img
-alt="Restaurant atmosphere" class="relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl animate-slow-zoom" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu8ed-A1y9gTbpwwsAwCp-y2UizGLkJWcvxkP-a0ayZWk01VdzVnD1NnO5B2nP7ny5aXZw1C-fIGXt9YnlVxw9qNNiw-5QZwMD3d9qjVoZdfBWUNapTFCFUT_ggep9knNe6n41GsNfnvvp6zoBy0D66y87-yNiebcIdoewkdPXNxh4rsaCjHys6ghau_xGleBSIzcTyod2PYIpI6fF2kNIie9B4uS3CdvWy3XNQ0ABOLTnASAtVexMK7yFRuo55xZj4PakkCyoo2ts">
+          <NuxtImg
+            alt="Restaurant atmosphere" 
+            class="relative rounded-cm-lg w-full aspect-[4/5] object-cover shadow-2xl animate-slow-zoom" 
+            src="/images/cozina-de-marray/restaurant-atmosphere.webp"
+            width="800"
+            quality="80"
+            loading="lazy"
+          />
         </div>
         <div class="space-y-6">
           <h1 class="text-5xl md:text-6xl font-cm-headline font-bold tracking-tight leading-tight text-cm-on-surface">

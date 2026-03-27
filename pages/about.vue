@@ -41,7 +41,7 @@
         <div class="aspect-[4/5] rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
           <NuxtImg
             class="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCymM_kWQFhYP_i5klxtxvh-Cakg-b5dpTB94qesCQz7tq-VC-WlQLO-D65hY9xXNzD_VQsgn2QwlpR2aV9SY6FvrHDYMLW0ZiALjqqves6xoUf_ujiNid9XmQJEeejI5yEzFNL0ZPPHAihmR_x-GCoMSjAkYsdt7h2WYH1hBRM08kh1NR7X64jrEI-3X9Z8VygJsHxLiiwHVae8G-0Rg211T0Sv7CdTpp7POSYKwEn2AAycFF7T0i1NvERuO2-HoLQ9TWDYCD_b92S"
+            src="/images/cozina-de-marray/hearth-preparation.webp"
             alt="Traditional hearth preparation"
             loading="lazy"
             width="800"
@@ -70,7 +70,7 @@
         <div class="aspect-video rounded-cm-lg overflow-hidden shadow-2xl bg-cm-surface-container">
           <NuxtImg
             class="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAacRGan7xV6mWfjIUKYTzA48yiAauY-caOeiiQBh1Ih8rUZnp4G6pnoVoWu7PLBtu4YTr3-pd_vFnwzxV9lnVjHrZawuTr2VPbBM8ovSh93ZiobDMh2AEmSWJyvr9pZ3wZEfT2eWdkfqcq6rFDNYTFIZ8zZtrjTlFcSM9cSx5UogpylCgOt0IVmR4Ylk1ya9O_7Z2AW5C-20GLNOmtg9g25aSl1Ca47Rs9z0OqdUBG0sRUdQD6Un0O4_AJ-XxoznSzKBQQuz1NZSy"
+            src="/images/cozina-de-marray/sustainable-sourcing.webp"
             alt="Sustainable sourcing details"
             loading="lazy"
             width="800"
