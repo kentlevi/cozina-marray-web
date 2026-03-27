@@ -1,5 +1,6 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-md bg-cm-surface/80 border-b border-cm-surface-variant/30 px-6 md:px-16 py-4">
+  <header id="main-nav-2027" class="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-md bg-cm-surface/80 border-b border-cm-surface-variant/30 px-6 md:px-16 py-4">
+    <!-- Build v888 -->
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <NuxtLink to="/" class="flex items-center gap-4 text-cm-on-surface ring-0 outline-none hover:opacity-80 transition-opacity">
         <div class="size-6 text-cm-primary-container">
@@ -26,5 +27,12 @@
 <style scoped>
 .font-cm-headline {
   font-family: 'Space Grotesk', sans-serif;
+}
+
+header#main-nav-2027 {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
 }
 </style>
